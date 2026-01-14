@@ -47,10 +47,10 @@ query AchievementsDefault {
         totalCount
       }
     }
-    projects(first: 1, orderBy: {field: CREATED_AT, direction: ASC}) {
+    projectsV2(first: 1) {
       totalCount
       #nodes { This requires additional scopes :/
-      #  name
+      #  title
       #}
     }
     packages(first: 1, orderBy: {direction: ASC, field: CREATED_AT}) {
