@@ -1575,7 +1575,17 @@ runs:
             echo "Using an unreleased version ($METRICS_VERSION)"
             METRICS_IMAGE=metrics:$METRICS_VERSION
           fi
-        # Forked action
+        # endavis fork with pre-built images
+        elif [[ $METRICS_SOURCE == "endavis" ]]; then
+          # Use pre-built image from endavis fork
+          METRICS_IMAGE=ghcr.io/endavis/metrics:bugfix-habits-activity
+          echo "Using endavis fork with pre-built image: $METRICS_IMAGE"
+          if ! docker image pull $METRICS_IMAGE; then
+            echo "Failed to fetch docker image from endavis registry, will rebuild it locally"
+            METRICS_IMAGE=metrics:forked-$METRICS_VERSION
+            # Will trigger rebuild below
+          fi
+        # Other forked action
         else
           echo "Using a forked version"
           METRICS_IMAGE=metrics:forked-$METRICS_VERSION
