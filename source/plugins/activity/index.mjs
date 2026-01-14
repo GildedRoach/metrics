@@ -29,11 +29,11 @@ export default async function({login, data, rest, q, account, imports}, {enabled
     try {
       for (let page = 1; page <= pages; page++) {
         console.debug(`metrics/compute/${login}/plugins > activity > loading page ${page}/${pages}`)
-        events.push(...(context.mode === "repository" ? await rest.activity.listRepoEvents({owner: context.owner, repo: context.repo}) : await rest.activity.listEventsForAuthenticatedUser({username: login, per_page: 100, page})).data)
+        events.push(...(context.mode === "repository" ? await rest.activity.listRepoEvents({owner: context.owner, repo: context.repo, per_page: 100, page}) : await rest.activity.listPublicEventsForUser({username: login, per_page: 100, page})).data)
       }
     }
-    catch {
-      console.debug(`metrics/compute/${login}/plugins > activity > no more page to load`)
+    catch (error) {
+      console.debug(`metrics/compute/${login}/plugins > activity > no more page to load (${error.message})`)
     }
     console.debug(`metrics/compute/${login}/plugins > activity > ${events.length} events loaded`)
 
