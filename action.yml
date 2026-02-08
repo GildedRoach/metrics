@@ -1575,7 +1575,16 @@ runs:
             echo "Using an unreleased version ($METRICS_VERSION)"
             METRICS_IMAGE=metrics:$METRICS_VERSION
           fi
-        # Forked action
+        # Based on endavis fork in case I ever publish this stupid thing
+        elif [[ $METRICS_SOURCE == "GildedRoach" ]]; then
+          METRICS_IMAGE=ghcr.io/GildedRoach/metrics:main
+          echo "Using GildedRoach fork with pre-built image: $METRICS_IMAGE"
+          if ! docker image pull $METRICS_IMAGE; then
+            echo "Failed to fetch Docker image, rebuilding it locally"
+            METRICS_IMAGE=metrics:forked-$METRICS_VERSION
+            # Will trigger rebuild below
+          fi
+        # Other forked action
         else
           echo "Using a forked version"
           # For forks, we use the original pre-built image as base (via Dockerfile)
