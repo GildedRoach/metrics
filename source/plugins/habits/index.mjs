@@ -48,13 +48,8 @@ export default async function({login, data, rest, imports, q, account}, {enabled
       ...await Promise.allSettled(
         commits
           .flatMap(({payload}) => payload?.commits ?? [])
-          .filter(commit => commit != null && typeof commit === 'object') // Filter out null/undefined commits and ensure it's an object
-          .filter(commit => {
-            // Safely check author property
-            const author = commit?.author
-            if (!author) return false
-            return data.shared["commits.authoring"].filter(authoring => author?.login?.toLocaleLowerCase().includes(authoring) || author?.email?.toLocaleLowerCase().includes(authoring) || author?.name?.toLocaleLowerCase().includes(authoring)).length
-          })
+          .filter(commit => commit?.author)
+          .filter(({author}) => data.shared["commits.authoring"].filter(authoring => author?.login?.toLocaleLowerCase().includes(authoring) || author?.email?.toLocaleLowerCase().includes(authoring) || author?.name?.toLocaleLowerCase().includes(authoring)).length)
           .map(async commit => (await rest.request(commit)).data.files),
       ),
     ]
