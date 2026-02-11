@@ -1,4 +1,4 @@
-name: Build and Publish Docker Image (Main)
+name: Build and Publish Docker Image (Staging)
 
 on:
   push:
