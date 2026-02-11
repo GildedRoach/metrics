@@ -29,7 +29,7 @@ jobs:
 
       - name: Tag as branch name
         run: |
-          docker tag ghcr.io/gildedroach/metrics:staging
+          docker tag ghcr.io/gildedroach/metrics:staging ghcr.io/gildedroach/metrics:staging
           docker push ghcr.io/gildedroach/metrics:staging
 
       - name: Summary
