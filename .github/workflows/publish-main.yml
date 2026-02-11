@@ -1,0 +1,46 @@
+name: Build and Publish Docker Image (Main)
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  # Build docker image and publish it to GitHub Container Registry
+  docker-bugfix:
+    name: Publish bugfix branch to GitHub registry
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          ref: main
+
+      - name: Login to GitHub Container Registry
+        run: echo ${{ github.token }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Build docker image
+        run: docker build -t ghcr.io/${{ github.repository_owner }}/metrics:main .
+
+      - name: Publish to GitHub Container Registry
+        run: docker push ghcr.io/${{ github.repository_owner }}/metrics:main
+
+      - name: Tag as branch name
+        run: |
+          docker tag ghcr.io/${{ github.repository_owner }}/metrics:main
+          docker push ghcr.io/${{ github.repository_owner }}/metrics:main
+
+      - name: Summary
+        run: |
+          echo "✅ Docker image published successfully!"
+          echo ""
+          echo "**Image tags:**"
+          echo "- \`ghcr.io/${{ github.repository_owner }}/metrics:main\`"
+          echo ""
+          echo "**Usage in GitHub Actions:**"
+          echo "\`\`\`yaml"
+          echo "uses: docker://ghcr.io/${{ github.repository_owner }}/metrics:main"
+          echo "\`\`\`"
