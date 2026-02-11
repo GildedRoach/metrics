@@ -1577,7 +1577,7 @@ runs:
           fi
         # Based on endavis fork in case I ever publish this stupid thing
         elif [[ $METRICS_SOURCE == "GildedRoach" ]]; then
-          METRICS_IMAGE=ghcr.io/GildedRoach/metrics:main
+          METRICS_IMAGE=ghcr.io/gildedroach/metrics:main
           echo "Using GildedRoach fork with pre-built image: $METRICS_IMAGE"
           if ! docker image pull $METRICS_IMAGE; then
             echo "Failed to fetch Docker image, rebuilding it locally"
