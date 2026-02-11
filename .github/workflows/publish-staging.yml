@@ -6,9 +6,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  # Build docker image and publish it to GitHub Container Registry
-  docker-bugfix:
-    name: Publish bugfix branch to GitHub registry
+  docker-staging:
+    name: Publish staging image to GitHub registry
     runs-on: ubuntu-latest
     permissions:
       contents: read
