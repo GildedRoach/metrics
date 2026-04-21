@@ -13,7 +13,7 @@ env:
 
 jobs:
   docker:
-    name: Publish main image to GitHub registry
+    name: Publish Docker image to GitHub registry
     runs-on: ubuntu-latest
     permissions:
       contents: read
