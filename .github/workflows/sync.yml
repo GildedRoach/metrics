@@ -26,7 +26,7 @@ jobs:
               git config --global merge.ours.driver true
               git remote add upstream https://github.com/terrapkg/packages
 
-          - name: Merge main into next
+          - name: Merge main into staging
             env:
               GITHUB_TOKEN: ${{ secrets.MERGE_TOKEN }}
             run: |
