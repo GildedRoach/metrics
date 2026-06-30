@@ -1,4 +1,4 @@
-name: Sync next with main
+name: Sync staging with main
 permissions:
   contents: read
 
@@ -19,14 +19,13 @@ jobs:
               fetch-depth: 0
               ref: staging
 
-          - name: Set up Git config
+          - name: Set Up Git Config
             run: |
               git config user.name "github-actions[bot]"
               git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
               git config --global merge.ours.driver true
-              git remote add upstream https://github.com/terrapkg/packages
 
-          - name: Merge main into staging
+          - name: Merge main Into staging
             env:
               GITHUB_TOKEN: ${{ secrets.MERGE_TOKEN }}
             run: |
